@@ -3,17 +3,21 @@ import { StyleSheet, TextInput, FlatList } from "react-native"
 import { useLazyQuery } from "@apollo/client"
 import { Box, Text } from "react-native-design-utility"
 
-import { theme } from "../../../constants/theme"
 import searchQuery from "../../../graphql/searchQuery"
 import { Podcast, QuerySearchArgs, Query } from "../../../types/graphql"
 
+import { theme } from "../../../constants/theme"
+import NoResults from "../../utils/NoResults"
+import PodcastItem from "./PodcastItem"
+import Loading from "../../utils/Loading"
+
 const SearchScreen = () => {
   const [term, setTerm] = React.useState("")
-  const [loadSearch, { data, loading, error }] = useLazyQuery<
-    Query,
-    QuerySearchArgs
-  >(searchQuery)
-  console.log(data)
+  const [
+    loadSearch,
+    { data: { search: searchResult = [] } = {}, loading, error },
+  ] = useLazyQuery<Query, QuerySearchArgs>(searchQuery)
+
   const onSearch = async () => {
     try {
       await loadSearch({ variables: { term } })
@@ -36,32 +40,21 @@ const SearchScreen = () => {
         />
       </Box>
 
-      {term && data?.hasOwnProperty("search") && !data.search.length ? (
-        <Box align="center">
-          <Text color={theme.color.grey}>No results found!</Text>
+      {error ? (
+        <Box f={1} center>
+          <Text color={theme.color.red}>{error.message}</Text>
         </Box>
-      ) : null}
-
-      <FlatList<Podcast>
-        keyboardShouldPersistTaps="never"
-        data={data?.search ?? []}
-        style={s.list}
-        renderItem={({ item }) => (
-          <Box h={90} dir="row" align="center" px="sm">
-            <Box h={70} w={70} bg={theme.color.blueLight} mr={10} radius={10} />
-            <Box>
-              <Text bold>{item.podcastName}</Text>
-              <Text size="xs" color="grey">
-                {item.artist}
-              </Text>
-              <Text size="xs" color="blueLight">
-                {item.episodesCount} episodes
-              </Text>
-            </Box>
-          </Box>
-        )}
-        keyExtractor={({ podcastName }) => String(podcastName)}
-      />
+      ) : (
+        <FlatList<Podcast>
+          keyboardShouldPersistTaps="never"
+          data={searchResult}
+          contentContainerStyle={s.list}
+          ListHeaderComponent={() => <Loading loading={loading} />}
+          ListEmptyComponent={() => <NoResults loading={loading} />}
+          renderItem={({ item }) => <PodcastItem item={item} />}
+          keyExtractor={({ podcastName, artist }) => podcastName + artist}
+        />
+      )}
     </Box>
   )
 }
@@ -76,7 +69,7 @@ const s = StyleSheet.create({
     fontSize: theme.text.size.md,
   },
   list: {
-    minHeight: "100%",
+    paddingBottom: 90,
   },
 })
 

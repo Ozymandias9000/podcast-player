@@ -1,24 +1,26 @@
-import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
+import { Ionicons } from "@expo/vector-icons"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { createStackNavigator } from "@react-navigation/stack"
+import * as React from "react"
 
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
-import LibraryScreen from "../components/screens/library/LibraryScreen";
-import ListenNowScreen from "../components/screens/listenNow/ListenNowScreen";
-import SearchScreen from "../components/screens/search/SearchScreen";
+import Colors from "../constants/Colors"
+import useColorScheme from "../hooks/useColorScheme"
+import LibraryScreen from "../components/screens/library/LibraryScreen"
+import ListenNowScreen from "../components/screens/listenNow/ListenNowScreen"
+import SearchScreen from "../components/screens/search/SearchScreen"
 import {
   MainTabParamList,
   LibraryParamList,
   ListenNowParamList,
   SearchParamList,
-} from "../types";
+} from "./types"
+import PodcastDetails from "../components/screens/search/PodcastItem"
+import { theme } from "../constants/theme"
 
-const MainTab = createBottomTabNavigator<MainTabParamList>();
+const MainTab = createBottomTabNavigator<MainTabParamList>()
 
 export default function MainTabNavigator() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme()
 
   return (
     <MainTab.Navigator
@@ -54,18 +56,18 @@ export default function MainTabNavigator() {
         }}
       />
     </MainTab.Navigator>
-  );
+  )
 }
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const LibraryStack = createStackNavigator<LibraryParamList>();
+const LibraryStack = createStackNavigator<LibraryParamList>()
 
 function LibraryNavigator() {
   return (
@@ -76,10 +78,10 @@ function LibraryNavigator() {
         options={{ title: "Library" }}
       />
     </LibraryStack.Navigator>
-  );
+  )
 }
 
-const ListenNowStack = createStackNavigator<ListenNowParamList>();
+const ListenNowStack = createStackNavigator<ListenNowParamList>()
 
 function ListenNowNavigator() {
   return (
@@ -90,18 +92,25 @@ function ListenNowNavigator() {
         options={{ title: "Listen Now" }}
       />
     </ListenNowStack.Navigator>
-  );
+  )
 }
-const SearchStack = createStackNavigator<SearchParamList>();
+const SearchStack = createStackNavigator<SearchParamList>()
 
 function SearchNavigator() {
   return (
-    <SearchStack.Navigator>
+    <SearchStack.Navigator
+      screenOptions={{ headerTintColor: theme.color.blueLight }}
+    >
       <SearchStack.Screen
         name="SearchScreen"
         component={SearchScreen}
         options={{ title: "Search" }}
       />
+      <SearchStack.Screen
+        name="PodcastDetails"
+        component={PodcastDetails}
+        options={{ title: "Details" }}
+      />
     </SearchStack.Navigator>
-  );
+  )
 }
