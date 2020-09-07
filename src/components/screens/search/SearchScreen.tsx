@@ -10,6 +10,7 @@ import { theme } from "../../../constants/theme"
 import NoResults from "../../utils/NoResults"
 import PodcastItem from "./PodcastItem"
 import Loading from "../../utils/Loading"
+import { MaterialIcons } from "@expo/vector-icons"
 
 const SearchScreen = () => {
   const [term, setTerm] = React.useState("")
@@ -29,15 +30,25 @@ const SearchScreen = () => {
   return (
     <Box f={1} bg="white">
       <Box h={50} w="100%" px="sm" my="sm">
-        <TextInput
-          style={s.input}
-          placeholder="Search Podcasts"
-          selectionColor={theme.color.blueLight}
-          onChangeText={setTerm}
-          autoCorrect={false}
-          onSubmitEditing={onSearch}
-          value={term}
-        />
+        <Box
+          dir="row"
+          align="center"
+          h={40}
+          radius={10}
+          bg={theme.color.greyLightest}
+          px="sm"
+        >
+          <MaterialIcons name="search" size={20} color={theme.color.greyDark} />
+          <TextInput
+            style={s.input}
+            placeholder="Search Podcasts"
+            selectionColor={theme.color.blueLight}
+            onChangeText={setTerm}
+            autoCorrect={false}
+            onSubmitEditing={onSearch}
+            value={term}
+          />
+        </Box>
       </Box>
 
       {error ? (

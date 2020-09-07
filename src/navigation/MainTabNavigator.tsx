@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons"
+import { MaterialIcons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
@@ -14,8 +14,10 @@ import {
   ListenNowParamList,
   SearchParamList,
 } from "./types"
-import PodcastDetails from "../components/screens/search/PodcastItem"
+import PodcastDetails from "../components/screens/podcastDetails/PodcastDetails"
+
 import { theme } from "../constants/theme"
+import { ICON_SIZE } from "../constants/constants"
 
 const MainTab = createBottomTabNavigator<MainTabParamList>()
 
@@ -33,7 +35,7 @@ export default function MainTabNavigator() {
         options={{
           tabBarLabel: "Listen Now",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="play-arrow" color={color} />
           ),
         }}
       />
@@ -42,7 +44,7 @@ export default function MainTabNavigator() {
         component={LibraryNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="library-music" color={color} />
           ),
         }}
       />
@@ -50,9 +52,7 @@ export default function MainTabNavigator() {
         name="Search"
         component={SearchNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
     </MainTab.Navigator>
@@ -62,7 +62,9 @@ export default function MainTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />
+  return (
+    <MaterialIcons size={ICON_SIZE} style={{ marginBottom: -3 }} {...props} />
+  )
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -99,7 +101,12 @@ const SearchStack = createStackNavigator<SearchParamList>()
 function SearchNavigator() {
   return (
     <SearchStack.Navigator
-      screenOptions={{ headerTintColor: theme.color.blueLight }}
+      screenOptions={{
+        headerTintColor: theme.color.blueLight,
+        headerTitleStyle: {
+          color: theme.color.black,
+        },
+      }}
     >
       <SearchStack.Screen
         name="SearchScreen"

@@ -8,7 +8,7 @@ interface Props {
   item: Podcast
 }
 
-const PodcastDetails: React.FC<Props> = ({ item }) => {
+const PodcastItem: React.FC<Props> = ({ item }) => {
   const nav = useNavigation()
 
   return (
@@ -44,4 +44,4 @@ const s = StyleSheet.create({
   },
 })
 
-export default PodcastDetails
+export default PodcastItem
