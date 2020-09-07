@@ -1,0 +1,7 @@
+overwrite: true
+schema: "https://frozen-river-77426.herokuapp.com/query"
+generates:
+  src/graphql/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-react-apollo"

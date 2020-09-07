@@ -1,17 +1,19 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --android",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@apollo/client": "^3.1.4",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.6.1",
@@ -25,9 +27,11 @@
     "expo-splash-screen": "~0.3.1",
     "expo-status-bar": "^1.0.2",
     "expo-web-browser": "~8.3.1",
+    "graphql": "^15.3.0",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+    "react-native-design-utility": "^1.0.9",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
@@ -35,6 +39,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@graphql-codegen/cli": "1.17.8",
+    "@graphql-codegen/typescript": "1.17.8",
+    "@graphql-codegen/typescript-operations": "1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "^2.0.6",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.62.13",
     "babel-preset-expo": "~8.1.0",
