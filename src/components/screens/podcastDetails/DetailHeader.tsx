@@ -1,9 +1,10 @@
-import * as React from "react"
-import { Image, StyleSheet } from "react-native"
+import React, { useContext } from "react"
+import { Image, StyleSheet, TouchableOpacity } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 import { Box, Text } from "react-native-design-utility"
 import { FeedItem, Podcast } from "../../../types/graphql"
 import { theme } from "../../../constants/theme"
+import { PlayerContext } from "../../../contexts/PlayerContext"
 
 interface Props {
   data: Podcast
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const DetailHeader: React.FC<Props> = ({ data, feed }) => {
+  const ctx = useContext(PlayerContext)
+
   return (
     <>
       <Box dir="row" px="sm" mt="sm" mb="md">
@@ -32,20 +35,36 @@ const DetailHeader: React.FC<Props> = ({ data, feed }) => {
         </Box>
       </Box>
       <Box px="sm" mb="md" dir="row" align="center">
-        <MaterialIcons
-          name="play-arrow"
-          size={30}
-          color={theme.color.blueLight}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            const el = feed?.[0]
 
-        <Box f={1}>
-          <Text size="xs" pl="xs" bold>
-            Play
-          </Text>
-          <Text size="sm" pl="xs">
-            {feed?.[0]?.title}
-          </Text>
-        </Box>
+            if (!el) return
+
+            ctx.play({
+              artist: data.artist,
+              title: el.title,
+              artwork: el.image ?? data.thumbnail,
+              id: el.linkUrl,
+              url: el.linkUrl,
+            })
+          }}
+        >
+          <MaterialIcons
+            name="play-arrow"
+            size={30}
+            color={theme.color.blueLight}
+          />
+
+          <Box f={1}>
+            <Text size="xs" pl="xs" bold>
+              Play
+            </Text>
+            <Text size="sm" pl="xs">
+              {feed?.[0]?.title}
+            </Text>
+          </Box>
+        </TouchableOpacity>
       </Box>
 
       <Box px="sm" mb="md">

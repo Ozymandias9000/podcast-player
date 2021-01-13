@@ -1,5 +1,6 @@
-import * as React from "react"
+import React from "react"
 import { Box, Text } from "react-native-design-utility"
+
 import { FeedItem } from "../../../types/graphql"
 
 interface Props {

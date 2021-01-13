@@ -6,6 +6,7 @@ import { ApolloProvider } from "@apollo/client"
 import useCachedResources from "./src/hooks/useCachedResources"
 import useColorScheme from "./src/hooks/useColorScheme"
 import Navigation from "./src/navigation"
+import PlayerContextProvider from "./src/contexts/PlayerContext"
 import { client } from "./src/graphql/client"
 
 export default function App() {
@@ -17,10 +18,12 @@ export default function App() {
   } else {
     return (
       <ApolloProvider client={client}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
+        <PlayerContextProvider>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </PlayerContextProvider>
       </ApolloProvider>
     )
   }

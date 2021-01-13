@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import { useQuery } from "@apollo/client"
 import { FlatList, StyleSheet } from "react-native"
 import { Box } from "react-native-design-utility"

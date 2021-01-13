@@ -1,7 +1,10 @@
+import React, { useContext } from "react"
 import { MaterialIcons } from "@expo/vector-icons"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import {
+  createBottomTabNavigator,
+  BottomTabBar,
+} from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from "@react-navigation/stack"
-import * as React from "react"
 
 import Colors from "../constants/Colors"
 import useColorScheme from "../hooks/useColorScheme"
@@ -18,16 +21,25 @@ import PodcastDetails from "../components/screens/podcastDetails/PodcastDetails"
 
 import { theme } from "../constants/theme"
 import { ICON_SIZE } from "../constants/constants"
+import Player from "../components/screens/player/Player"
+import { PlayerContext } from "../contexts/PlayerContext"
 
 const MainTab = createBottomTabNavigator<MainTabParamList>()
 
 export default function MainTabNavigator() {
   const colorScheme = useColorScheme()
+  const { isEmpty } = useContext(PlayerContext)
 
   return (
     <MainTab.Navigator
       initialRouteName="ListenNow"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBar={(props) => (
+        <>
+          {!isEmpty && <Player />}
+          <BottomTabBar {...props} />
+        </>
+      )}
     >
       <MainTab.Screen
         name="ListenNow"

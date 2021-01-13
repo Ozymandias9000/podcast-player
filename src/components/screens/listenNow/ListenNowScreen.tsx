@@ -1,34 +1,9 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
+import * as React from "react"
+import { StyleSheet } from "react-native"
+import { Box } from "react-native-design-utility"
 
-import { Text, View } from "../../utils/Themed";
+import Player from "../player/Player"
 
 export default function ListenNowScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Listen Now</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-    </View>
-  );
+  return <Box>{/* <Player></Player> */}</Box>
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
